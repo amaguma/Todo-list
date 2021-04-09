@@ -1,13 +1,52 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --color--btn-delete: #d95d5d;
+  --color--background-task: #f3f3f3;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 35rem;
+}
+
+ul {
+  width: 100%;
+}
+
+.input {
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.input button {
+  margin-left: 1rem;
+  font-size: 20px;
+}
+
+.btn-delete {
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+
+.task {
+  margin-bottom: 1rem;
+}
+
+.task.completed span {
+  text-decoration: line-through;
+}
+
+.task label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem;
+  background: var(--color--background-task);
 }
