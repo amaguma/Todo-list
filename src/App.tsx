@@ -1,30 +1,65 @@
 import { FC, useState, useEffect } from 'react';
 import TodoInput from './components/TodoInput';
 import TodoList from './components/TodoList';
-import {ITask, Button } from './interfaces';
+import {ITask, IButton } from './interfaces';
 import data from './components/data/data.json'
-import baseStateBtns from './components/data/baseBtns.json'
 import TodoMenu from './components/TodoMenu'
 import TodoTable from './components/TodoTable';
 
 
-const nullStateTasks = JSON.stringify(data);
-const nullStateBtns = JSON.stringify(baseStateBtns);
+const baseStateBtns = [
+  {
+      id: 1,
+      content: "All",
+      active: true
+  },
+  {
+      id: 2,
+      content: "Completed",
+      active: false
+  },
+  {
+      id: 3,
+      content: "Active",
+      active: false
+  }
+];
 
 const App: FC = () => {
 
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [btns, setBtns] = useState<Button[]>([]);
+  const [btns, setBtns] = useState<IButton[]>([]);
 
+  
   
 
   useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem('tasks') || nullStateTasks) as ITask[];
-    setTasks(savedTasks); 
-    const savedBtn = JSON.parse(localStorage.getItem('btns') || nullStateBtns) as Button[];
+    const savedTasks = (JSON.parse(localStorage.getItem('tasks')!) || data) as ITask[];
+    setTasks(savedTasks)
+      // .map((task, index) => {
+    //   if (task.isComplete) {
+    //     if (index < data.length) {
+    //       console.log(task.title + ' ' +  index + ' ' + task.dateCompleted)
+    //       if (task.id === data[index].id) {
+    //         if (data[index].dateCompleted) {
+    //           return {
+    //             ...task,
+    //             dateCompleted: new Date(data[index].dateCompleted!)
+    //           }
+    //         } else {
+    //           return {
+    //             ...task,
+    //             dateCompleted: new Date()
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    //   return task;
+    // }));
+    const savedBtn = JSON.parse(localStorage.getItem('btns')!) as IButton[] || baseStateBtns;
     setBtns(savedBtn); 
   }, []);
-  
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks))
@@ -61,12 +96,7 @@ const App: FC = () => {
 
   const clickHandler = (id: number) => {
     setBtns(prev => prev.map(btn => {
-        if (btn.id === id) {
-            btn.active = true;
-        } else {
-            btn.active = false;
-        }
-        return btn;
+      return {...btn, active: btn.id === id};
     }));
   }
 
@@ -79,7 +109,6 @@ const App: FC = () => {
       return tasks.filter(task => task.isComplete === false);
     }
   }
-
 
   return (
     <div className="container">
@@ -95,9 +124,7 @@ const App: FC = () => {
           <div id={list.content} key={list.id} className={classes.join(' ')}>
             <TodoMenu tasks={todoList} btns={btns} onClick={clickHandler} />
             <TodoList tasks={todoList} onToggle={toggleHandler} onDelete={deleteHandler}/>
-            {list.id === 2 &&
-              <TodoTable tasks={todoList}/> 
-            }
+            {list.id === 2 && <TodoTable tasks={todoList}/>}
           </div>
         )
       })}

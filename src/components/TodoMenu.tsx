@@ -1,9 +1,9 @@
 import { FC } from 'react'
-import { ITask, Button } from '../interfaces'
+import { ITask, IButton } from '../interfaces'
 
 interface TodoMenuProps {
     tasks: ITask[];
-    btns: Button[];
+    btns: IButton[];
     onClick(id: number): void;
 }
    
@@ -15,7 +15,7 @@ const TodoMenu: FC<TodoMenuProps> = ({tasks, btns, onClick}) => {
                 <ul className="navigation">
                     {btns.map(btn => {
                         return(
-                            <li key={btn.id}><a onClick={onClick.bind(null, btn.id)} href={'#' + btn.content} className={btn.active ? "active" : ""}>{btn.content}</a></li>
+                            <li key={btn.id}><a onClick={() => onClick(btn.id)} href={'#' + btn.content} className={btn.active ? "active" : ""}>{btn.content}</a></li>
                         )
                     })}
                 </ul>

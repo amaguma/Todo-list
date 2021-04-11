@@ -2,10 +2,10 @@ export interface ITask {
     title: string;
     id: number;
     isComplete: boolean;
-    dataCompleted?: Date;
+    dateCompleted?: Date;
 }
 
-export interface Button {
+export interface IButton {
     id: number;
     content: string;
     active: boolean;

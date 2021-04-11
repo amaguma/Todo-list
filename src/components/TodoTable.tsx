@@ -6,10 +6,18 @@ interface TodoTableProps {
 }
 
 const TodoTable: FC<TodoTableProps> = ({tasks}) => {
+    function getWeekNumber(date: Date): number {
+        const newDate = new Date(date);
+        newDate.setHours(0, 0, 0, 0);
+        newDate.setDate(newDate.getDate() + 3 - (newDate.getDay() + 6) % 7);
+        const week1 = new Date(newDate.getFullYear(), 0, 4);
+        return 1 + Math.round(((newDate.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+    }
 
-    let quantitys = [...Array(7)].map(() => 0);
-    quantitys = quantitys.map((elem, index) => {
-        elem = tasks.filter(task => task.dataCompleted!.getDay() === index).length
+    const quantity = [...Array(7)]
+        .map(() => 0)
+        .map((elem, index) => {
+        elem = tasks.filter(task => task.dateCompleted!.getDay() === index && getWeekNumber(task.dateCompleted!) === getWeekNumber(new Date())).length
         return elem;
     });
 
@@ -30,7 +38,7 @@ const TodoTable: FC<TodoTableProps> = ({tasks}) => {
 
                 <tbody>
                     <tr>
-                        {quantitys.map((quantity, index) => {
+                        {quantity.map((quantity, index) => {
                             return(
                                 <td key={index}>{quantity}</td>
                             )

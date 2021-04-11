@@ -15,9 +15,12 @@ const TodoList: FC<TodoListProps> = ({tasks, onToggle, onDelete}) => {
                     const classElem = ['task'];
                     if (task.isComplete) {
                         classElem.push('completed');
-                      
-                            task.dataCompleted = new Date();
-                         
+                        task.dateCompleted = new Date();
+                        // console.log('old' + task.dateCompleted!)
+                        // if (task.dateCompleted === undefined) {
+                        //     console.log(task.title);
+                        //     task.dateCompleted = new Date();
+                        // } 
                     }
                     return (
                         <li className={classElem.join(' ')} key={task.id}>
@@ -25,15 +28,14 @@ const TodoList: FC<TodoListProps> = ({tasks, onToggle, onDelete}) => {
                             <input 
                                 type="checkbox" 
                                 checked={task.isComplete}
-                                onChange={onToggle.bind(null, task.id)}
+                                onChange={() => onToggle(task.id)}
                             />
                             <span>{task.title}</span>
-                            <button className="btn-delete btn-floating btn-large waves-effect waves-light delete" onClick={onDelete.bind(null, task.id)}>X</button>
+                            <button className="btn-delete btn-floating btn-large waves-effect waves-light delete" onClick={() => onDelete(task.id)}>X</button>
                         </label>
                     </li>
                     )
                 })}
-            
             </ul>
         </>
     )
