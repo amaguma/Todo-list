@@ -9,10 +9,6 @@
   --color-scroll: #64996a;
 }
 
-body {
-  overflow-y: hidden;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -26,7 +22,6 @@ ul {
 }
 
 .input {
-  padding-top: 1rem;
   display: flex;
   align-items: center;
   width: 80%;

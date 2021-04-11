@@ -2,7 +2,7 @@ export interface ITask {
     title: string;
     id: number;
     isComplete: boolean;
-    dateCompleted?: Date;
+    dateCompleted?: number;
 }
 
 export interface IButton {

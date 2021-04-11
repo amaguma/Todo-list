@@ -17,7 +17,20 @@ const TodoTable: FC<TodoTableProps> = ({tasks}) => {
     const quantity = [...Array(7)]
         .map(() => 0)
         .map((elem, index) => {
-        elem = tasks.filter(task => task.dateCompleted && task.dateCompleted.getDay() === index && getWeekNumber(task.dateCompleted) === getWeekNumber(new Date())).length
+        elem = tasks
+        .map(task => {
+            if (task.dateCompleted) {
+                return {
+                    ...task,
+                    dateCompleted: new Date(task.dateCompleted)
+                }
+            }
+            return {
+                ...task,
+                dateCompleted: Date.now()
+            }
+        })
+        .filter(task => new Date(task.dateCompleted).getDay() === index && getWeekNumber(new Date(task.dateCompleted)) === getWeekNumber(new Date())).length
         return elem;
     });
 

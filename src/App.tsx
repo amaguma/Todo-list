@@ -25,22 +25,22 @@ const baseStateBtns = [
   }
 ];
 
-const dataTypeITask = data.map(task => {
-  if (task.isComplete) {
-    if (task.dateCompleted) {
-      return {
-        ...task,
-        dateCompleted: new Date(task.dateCompleted)
-      }
-    } else {
-      return {
-        ...task,
-        dateCompleted: new Date()
-      }
-    }
-  }
-  return task;
-}) as ITask[];
+// const dataTypeITask = data.map(task => {
+//   if (task.isComplete) {
+//     if (task.dateCompleted) {
+//       return {
+//         ...task,
+//         dateCompleted: new Date(task.dateCompleted)
+//       }
+//     } else {
+//       return {
+//         ...task,
+//         dateCompleted: new Date()
+//       }
+//     }
+//   }
+//   return task;
+// }) as ITask[];
 
 const App: FC = () => {
 
@@ -52,7 +52,7 @@ const App: FC = () => {
   
 
   useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem('tasks')!) as ITask[] || dataTypeITask;
+    const savedTasks = (JSON.parse(localStorage.getItem('tasks')!) || data) as ITask[] 
     setTasks(savedTasks)
     const savedBtn = JSON.parse(localStorage.getItem('btns')!) as IButton[] || baseStateBtns;
     setBtns(savedBtn); 
@@ -78,9 +78,11 @@ const App: FC = () => {
   const toggleHandler = (id: number) => {
     setTasks(prev => prev.map(task => {
       if (task.id === id) {
+        const isComplete = !task.isComplete
         return {
           ...task,
-          isComplete: !task.isComplete
+          isComplete,
+          dateCompleted: isComplete ? Date.now() : undefined
         }
       }
       return task;

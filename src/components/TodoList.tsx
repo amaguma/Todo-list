@@ -15,12 +15,6 @@ const TodoList: FC<TodoListProps> = ({tasks, onToggle, onDelete}) => {
                     const classElem = ['task'];
                     if (task.isComplete) {
                         classElem.push('completed');
-                        // task.dateCompleted = new Date();
-                        // console.log('old' + task.dateCompleted!)
-                        // if (task.dateCompleted === undefined) {
-                        //     console.log(task.title);
-                        //     task.dateCompleted = new Date();
-                        // } 
                     }
                     return (
                         <li className={classElem.join(' ')} key={task.id}>
