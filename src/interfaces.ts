@@ -2,6 +2,7 @@ export interface ITask {
     title: string;
     id: number;
     isComplete: boolean;
+    dataCompleted?: Date;
 }
 
 export interface Button {

@@ -2,7 +2,7 @@
     {
         "title": "Сделать todo list", 
         "id": 1618058871639, 
-        "isComplete": false
+        "isComplete": true
     },
     {
         "title": "пройти на стажировку в JetBrains", 
@@ -12,6 +12,7 @@
     {
         "title": "выучить реакт", 
         "id": 1618009582345, 
-        "isComplete": false
+        "isComplete": true,
+        "dataCompleted": "2021-03-11T01:43:55.650Z"
     }
 ]

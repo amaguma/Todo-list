@@ -3,37 +3,28 @@ import TodoInput from './components/TodoInput';
 import TodoList from './components/TodoList';
 import {ITask, Button } from './interfaces';
 import data from './components/data/data.json'
+import baseStateBtns from './components/data/baseBtns.json'
 import TodoMenu from './components/TodoMenu'
+import TodoTable from './components/TodoTable';
 
-const buttons: Button[] = [
-  {
-      id: 1,
-      content: "All",
-      active: true
-  },
-  {
-      id: 2,
-      content: "Completed",
-      active: false
-  },
-  {
-      id: 3,
-      content: "Active",
-      active: false
-  }
-]
+
+const nullStateTasks = JSON.stringify(data);
+const nullStateBtns = JSON.stringify(baseStateBtns);
 
 const App: FC = () => {
 
-  const [tasks, setTasks] = useState<ITask[]>(data);
-  const [btns, setBtns] = useState<Button[]>(buttons);
+  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [btns, setBtns] = useState<Button[]>([]);
+
+  
 
   useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem('tasks') || '[]') as ITask[];
+    const savedTasks = JSON.parse(localStorage.getItem('tasks') || nullStateTasks) as ITask[];
     setTasks(savedTasks); 
-    const savedBtn = JSON.parse(localStorage.getItem('btns') || '[]') as Button[];
+    const savedBtn = JSON.parse(localStorage.getItem('btns') || nullStateBtns) as Button[];
     setBtns(savedBtn); 
   }, []);
+  
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks))
@@ -47,7 +38,7 @@ const App: FC = () => {
     const newTask: ITask = {
       title: title,
       id: Date.now(),
-      isComplete: false
+      isComplete: false,
     }
     setTasks(prev => [newTask, ...prev]);
   }
@@ -79,10 +70,6 @@ const App: FC = () => {
     }));
   }
 
-  // const getElem: ITask[] = (id: number) => {
-  //     return tasks;
-  // }
-
   function getTodoList(id: number): ITask[] {
     if (id === 1) {
       return tasks;
@@ -108,6 +95,9 @@ const App: FC = () => {
           <div id={list.content} key={list.id} className={classes.join(' ')}>
             <TodoMenu tasks={todoList} btns={btns} onClick={clickHandler} />
             <TodoList tasks={todoList} onToggle={toggleHandler} onDelete={deleteHandler}/>
+            {list.id === 2 &&
+              <TodoTable tasks={todoList}/> 
+            }
           </div>
         )
       })}
