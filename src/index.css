@@ -111,6 +111,7 @@ ul {
 .list {
   overflow-y: auto;
   max-height: 320px;
+  margin-bottom: 0;
 }
 
 .list::-webkit-scrollbar {
@@ -121,10 +122,4 @@ ul {
 .list::-webkit-scrollbar-thumb {
   background: var(--color-scroll); 
   border-radius: 10px;
-}
-
-.table {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
 }
