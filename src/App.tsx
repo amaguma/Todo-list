@@ -25,38 +25,35 @@ const baseStateBtns = [
   }
 ];
 
+const dataTypeITask = data.map(task => {
+  if (task.isComplete) {
+    if (task.dateCompleted) {
+      return {
+        ...task,
+        dateCompleted: new Date(task.dateCompleted)
+      }
+    } else {
+      return {
+        ...task,
+        dateCompleted: new Date()
+      }
+    }
+  }
+  return task;
+}) as ITask[];
+
 const App: FC = () => {
 
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [btns, setBtns] = useState<IButton[]>([]);
 
+
   
   
 
   useEffect(() => {
-    const savedTasks = (JSON.parse(localStorage.getItem('tasks')!) || data) as ITask[];
+    const savedTasks = JSON.parse(localStorage.getItem('tasks')!) as ITask[] || dataTypeITask;
     setTasks(savedTasks)
-      // .map((task, index) => {
-    //   if (task.isComplete) {
-    //     if (index < data.length) {
-    //       console.log(task.title + ' ' +  index + ' ' + task.dateCompleted)
-    //       if (task.id === data[index].id) {
-    //         if (data[index].dateCompleted) {
-    //           return {
-    //             ...task,
-    //             dateCompleted: new Date(data[index].dateCompleted!)
-    //           }
-    //         } else {
-    //           return {
-    //             ...task,
-    //             dateCompleted: new Date()
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    //   return task;
-    // }));
     const savedBtn = JSON.parse(localStorage.getItem('btns')!) as IButton[] || baseStateBtns;
     setBtns(savedBtn); 
   }, []);

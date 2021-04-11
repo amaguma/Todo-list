@@ -17,7 +17,7 @@ const TodoTable: FC<TodoTableProps> = ({tasks}) => {
     const quantity = [...Array(7)]
         .map(() => 0)
         .map((elem, index) => {
-        elem = tasks.filter(task => task.dateCompleted!.getDay() === index && getWeekNumber(task.dateCompleted!) === getWeekNumber(new Date())).length
+        elem = tasks.filter(task => task.dateCompleted && task.dateCompleted.getDay() === index && getWeekNumber(task.dateCompleted) === getWeekNumber(new Date())).length
         return elem;
     });
 
